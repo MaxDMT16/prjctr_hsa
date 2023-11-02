@@ -19,5 +19,5 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/events", handler.Handle).Methods(http.MethodPost)
 
-	logrus.Fatal(http.ListenAndServe(":8989", r))
+	logrus.Fatal(http.ListenAndServe(":80", r))
 }

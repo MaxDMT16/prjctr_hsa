@@ -1,0 +1,22 @@
+version: '3'
+services:
+  app:
+    build: ./app
+    env_file: config.env
+    ports:
+      - '127.0.0.1:8989:80'
+    depends_on:
+      - storage
+    links:
+      - storage
+
+  storage:
+    image: postgres:latest
+    env_file: config.env
+    ports:
+      - '127.0.0.1:5432:5432'
+    volumes:
+      - database_postgres:/var/lib/postgresql/data
+
+volumes:
+  database_postgres:
