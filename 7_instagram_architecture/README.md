@@ -16,4 +16,4 @@ Due to Bard, Instagram has 500M daily active users and 95 million new posts are 
 
 ## High-leve design
 
-![simplified diagram](simplified_diagram.png`)
+![simplified diagram](simplified_diagram.png)
