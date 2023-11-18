@@ -1,1 +1,0 @@
-siege -d0.5 -v -t1s -c100 --content-type 'application/json' 'http://localhost:8989/events POST {"name": "app_installed", "value": 342}'

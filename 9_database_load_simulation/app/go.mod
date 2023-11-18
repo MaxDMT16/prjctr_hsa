@@ -3,6 +3,7 @@ module prjctr/md/9_database_load_simulation
 go 1.20
 
 require (
+	github.com/brianvoe/gofakeit/v6 v6.24.0
 	github.com/gorilla/mux v1.8.1
 	github.com/sirupsen/logrus v1.9.3
 	gorm.io/driver/postgres v1.5.4
