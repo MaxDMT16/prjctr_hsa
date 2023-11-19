@@ -28,6 +28,7 @@ func main() {
 
 	r := mux.NewRouter()
 	r.HandleFunc("/users", handler.Create).Methods(http.MethodPost)
+	r.HandleFunc("/users/rnd", handler.CreateRandom).Methods(http.MethodPost)
 	r.HandleFunc("/users", handler.Get).Methods(http.MethodGet)
 	r.HandleFunc("/users/status", handler.Status).Methods(http.MethodGet)
 

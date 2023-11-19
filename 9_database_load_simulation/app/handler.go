@@ -121,6 +121,25 @@ func (h *userHandler) Create(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+func (h *userHandler) CreateRandom(w http.ResponseWriter, r *http.Request) {
+	u := NewRandomUser()
+
+	res := h.storage.WithContext(r.Context()).Create(u)
+
+	if res.Error != nil {
+		logrus.WithError(res.Error).
+			Error("create model failed")
+
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	logrus.WithField("user", u).
+		Debug("model created")
+
+	w.WriteHeader(http.StatusOK)
+}
+
 func NewUserHandler(storage *gorm.DB) *userHandler {
 	return &userHandler{
 		storage: storage,

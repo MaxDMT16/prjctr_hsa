@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
@@ -10,8 +11,7 @@ import (
 )
 
 func NewStorage() *gorm.DB {
-	// dsn := os.Getenv("POSTGRES_DSN")
-	dsn := "host=127.0.0.1 user=test_user password=test_user_pass dbname=main port=5432"
+	dsn := os.Getenv("POSTGRES_DSN")
 	
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 		Logger: logger.New(logrus.New(), logger.Config{
