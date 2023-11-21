@@ -1,0 +1,27 @@
+version: '3'
+services:
+  percona:
+    image: percona:5.7
+    container_name: percona
+    restart: always
+    ports:
+      - 3306:3306
+    env_file:
+      - config.env
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    env_file:
+      - config.env
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data:
+  mysql_data:
