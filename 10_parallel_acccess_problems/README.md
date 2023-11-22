@@ -14,3 +14,10 @@
 | Serializable     | No          | No         | No                  | No           |
 
 ## PostgreSQL
+
+| Isolation level  | Lost update | Dirty read | Non-repeatable read  | Phantom read  |
+| ---------------- | ----------- | ---------- | -------------------  | ------------  |
+| Read committed   | No          | No         | No                   | Yes           |
+| Read uncommitted | No          | No         | No                   | Yes           |
+| Repeatable read  | No          | No         | No                   | No            |
+| Serializable     | No          | No         | No                   | No            |
