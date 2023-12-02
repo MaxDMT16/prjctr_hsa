@@ -1,0 +1,48 @@
+version: '3.7'
+
+services:
+  app:
+    build: ./app
+    env_file: config.env
+    ports:
+      - '127.0.0.1:8989:80'
+    depends_on:
+      - redis-master
+    links:
+      - redis-master
+
+  redis-master:
+    image: redis:7.0.5
+    volumes:
+      - "./.data:/data"
+    ports:
+      - "6379:6379"
+ 
+  redis-slave:
+    image: redis:7.0.5
+    command: redis-server --slaveof redis-master 6379
+    links:
+      - redis-master
+    volumes:
+      - "./.data-slave:/data"
+     
+  # Instance 1
+  redis-sentinel:
+    build: 
+      context: ./redis-sentinel
+    links:
+      - redis-master
+ 
+  # Instance 2
+  redis-sentinel2:
+    build: 
+      context: ./redis-sentinel
+    links:
+      - redis-master
+ 
+  # Instance 3
+  redis-sentinel3:
+    build: 
+      context: ./redis-sentinel
+    links:
+      - redis-master
