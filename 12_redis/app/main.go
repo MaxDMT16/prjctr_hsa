@@ -114,6 +114,7 @@ func (a *api) ping(w http.ResponseWriter, r *http.Request) {
 // cache
 
 type redisConfig struct {
+	SentinelName  string
 	SentinelAddrs []string
 	RedisAddr     string
 }
@@ -123,6 +124,7 @@ func newRedisConfig() *redisConfig {
 
 	return &redisConfig{
 		SentinelAddrs: strings.Split(v, ","),
+		SentinelName:  os.Getenv("SentinelName"),
 		RedisAddr:     os.Getenv("RedisAddr"),
 	}
 }
@@ -133,7 +135,7 @@ type cache struct {
 }
 
 func newCache(ctx context.Context, config redisConfig) (*cache, error) {
-	c, err := (radix.SentinelConfig{}).New(ctx, "tcp", config.SentinelAddrs)
+	c, err := (radix.SentinelConfig{}).New(ctx, config.SentinelName, config.SentinelAddrs)
 	// c, err := (radix.PoolConfig{}).New(ctx, "tcp", config.RedisAddr)
 	if err != nil {
 		return nil, err

@@ -7,7 +7,12 @@ services:
     ports:
       - '127.0.0.1:8989:80'
     depends_on:
-      - redis-master
+      redis-sentinel:
+          condition: service_started
+      redis-sentinel2:
+          condition: service_started
+      redis-sentinel3:
+          condition: service_started
     links:
       - redis-master
 
@@ -30,6 +35,7 @@ services:
   redis-sentinel:
     build: 
       context: ./redis-sentinel
+    env_file: config.env
     links:
       - redis-master
  
@@ -37,6 +43,7 @@ services:
   redis-sentinel2:
     build: 
       context: ./redis-sentinel
+    env_file: config.env
     links:
       - redis-master
  
@@ -44,5 +51,6 @@ services:
   redis-sentinel3:
     build: 
       context: ./redis-sentinel
+    env_file: config.env
     links:
       - redis-master
