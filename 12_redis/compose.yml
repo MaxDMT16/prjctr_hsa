@@ -30,6 +30,8 @@ services:
       - redis-master
     volumes:
       - "./.data-slave:/data"
+      - "./redis.conf:/usr/local/etc/redis/redis.conf"
+    
      
   # Instance 1
   redis-sentinel:
