@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	app "prjctr/md/13_queues"
 )
 
@@ -13,5 +14,5 @@ func main() {
 
 	api := app.NewAPI(config)
 
-	api.Run()
+	log.Fatal(api.Run())
 }

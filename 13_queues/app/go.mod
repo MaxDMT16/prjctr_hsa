@@ -3,6 +3,7 @@ module prjctr/md/13_queues
 go 1.20
 
 require (
+	github.com/beanstalkd/go-beanstalk v0.2.0
 	github.com/gorilla/mux v1.8.0
 	github.com/mediocregopher/radix/v4 v4.1.4
 )

@@ -25,20 +25,30 @@ services:
     ports:
       - "6379:6379"
  
-  redis-aof:
-    image: redis:7.0.9
-    command: redis-server /usr/local/etc/redis/redis.conf
-    volumes:
-      - "data-aof:/data"
-      - "./redis-aof.conf:/usr/local/etc/redis/redis.conf"
-    ports:
-      - "6380:6379"
+  # redis-aof:
+  #   image: redis:7.0.9
+  #   command: redis-server /usr/local/etc/redis/redis.conf
+  #   volumes:
+  #     - "data-aof:/data"
+  #     - "./redis-aof.conf:/usr/local/etc/redis/redis.conf"
+  #   ports:
+  #     - "6380:6379"
 
   beanstalkd:
     image: trovit/beanstalkd:latest
     container_name: beanstalkd
     volumes:
       - data-beanstalkd:/var/lib/beanstalkd
+
+  beanstalkd-ui:
+    image: thedavis/beanstalkd-ui
+    ports:
+      - 8008:80
+    environment:
+      - BEANSTALKD_HOST=beanstalkd
+      - BEANSTALKD_PORT=11300
+    links:
+      - beanstalkd
     
 volumes:
   data-rdb:
