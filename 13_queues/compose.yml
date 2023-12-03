@@ -1,0 +1,47 @@
+version: '3.7'
+
+services:
+  # app:
+  #   build: ./app
+  #   env_file: config.env
+  #   ports:
+  #     - '127.0.0.1:8989:80'
+  #   depends_on:
+  #     redis-sentinel:
+  #         condition: service_started
+  #     redis-sentinel2:
+  #         condition: service_started
+  #     redis-sentinel3:
+  #         condition: service_started
+  #   links:
+  #     - redis-master
+
+  redis-rdb:
+    image: redis:7.0.9
+    volumes:
+      - "./redis-rdb.conf:/usr/local/etc/redis/redis.conf"
+      - "data-rdb:/data"
+    command: redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - "6379:6379"
+ 
+  redis-aof:
+    image: redis:7.0.9
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - "data-aof:/data"
+      - "./redis-aof.conf:/usr/local/etc/redis/redis.conf"
+    ports:
+      - "6380:6379"
+
+  beanstalkd:
+    image: trovit/beanstalkd:latest
+    container_name: beanstalkd
+    volumes:
+      - data-beanstalkd:/var/lib/beanstalkd
+    
+volumes:
+  data-rdb:
+  data-aof:
+  data-beanstalkd:
+     
