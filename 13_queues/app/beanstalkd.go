@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	beanstalk "github.com/beanstalkd/go-beanstalk"
 	"github.com/gorilla/mux"
@@ -28,7 +29,7 @@ func (h *beanstalkHandlers) Push(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&body)
 	if err != nil {
 		log.Println("invalid json body")
-		
+
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -51,7 +52,7 @@ func (h *beanstalkHandlers) Pop(w http.ResponseWriter, r *http.Request) {
 
 	message, err := h.beanstalkd.Pop(queue)
 	if err != nil {
-		log.Println("error popping message from beanstalkd")
+		log.Println(fmt.Errorf("pop message from beanstalkd: %w", err))
 
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -63,11 +64,14 @@ func (h *beanstalkHandlers) Pop(w http.ResponseWriter, r *http.Request) {
 }
 
 type beanstalkConfig struct {
-	Address string
+	Address    string
+	JobTTR     int
+	JobTimeout int
 }
 
 type beanstalkdWrapper struct {
 	client *beanstalk.Conn
+	config beanstalkConfig
 }
 
 func NewBeanstalkWrapper(config beanstalkConfig) (*beanstalkdWrapper, error) {
@@ -82,9 +86,7 @@ func NewBeanstalkWrapper(config beanstalkConfig) (*beanstalkdWrapper, error) {
 }
 
 func (b *beanstalkdWrapper) Push(queue, message string) error {
-	b.client.Tube.Name = queue
-
-	_, err := b.client.Put([]byte(message), 1, 0, 0)
+	_, err := b.client.Put([]byte(message), 1, 0, time.Duration(b.config.JobTTR*int(time.Second)))
 	if err != nil {
 		return fmt.Errorf("pushing message to beanstalk: %w", err)
 	}
@@ -93,11 +95,14 @@ func (b *beanstalkdWrapper) Push(queue, message string) error {
 }
 
 func (b *beanstalkdWrapper) Pop(queue string) (string, error) {
-	b.client.Tube.Name = queue
-
-	jobID, body, err := b.client.Reserve(1)
+	jobID, body, err := b.client.Reserve(time.Duration(b.config.JobTimeout * int(time.Second)))
 	if err != nil {
 		return "", fmt.Errorf("reserving job %d from beanstalk: %w", jobID, err)
+	}
+
+	err = b.client.Delete(jobID)
+	if err != nil {
+		return "", fmt.Errorf("deleting job %d from beanstalk: %w", jobID, err)
 	}
 
 	return string(body), nil
