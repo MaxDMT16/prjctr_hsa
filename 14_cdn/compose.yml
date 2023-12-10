@@ -1,0 +1,67 @@
+version: '3.7'
+services:
+  bind:
+    build: ./bind
+    restart: always
+    ports:
+      - "8053:53/udp"
+      - "8053:53/tcp"
+      - "953:953/tcp"
+    # restart: always
+    # image: sameersbn/bind:9.16.1-20200524
+    # ports:
+    # - "8053:53/udp"
+    # - "8053:53/tcp"
+    # - "10000:10000/tcp"
+    # volumes:
+    # - bind_data:/data
+
+  lb-1:
+    image: nginx
+    volumes:
+      - ./nginx/lb-1.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - '127.0.0.1:9998:80'
+    depends_on:
+      - node-1
+      - node-2
+    links:
+      - node-1
+      - node-2
+  lb-2:
+    image: nginx
+    volumes:
+      - ./nginx/lb-2.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - '127.0.0.1:9999:80'
+    depends_on:
+      - node-3
+      - node-4
+    links:
+      - node-3
+      - node-4
+  
+  node-1:
+    image: nginx
+    volumes:
+      - ./nginx/node-1.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./img:/www/img
+  node-2:
+    image: nginx
+    volumes:
+      - ./nginx/node-2.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./img:/www/img
+  node-3:
+    image: nginx
+    volumes:
+      - ./nginx/node-3.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./img:/www/img
+  node-4:
+    image: nginx
+    volumes:
+      - ./nginx/node-4.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./img:/www/img
+  
+
+volumes:
+  bind_data:

@@ -1,0 +1,4 @@
+zone "lab-net.lan" {    
+    type master;    
+    file "/etc/bind/zones/db.lab-net.lan";
+};
