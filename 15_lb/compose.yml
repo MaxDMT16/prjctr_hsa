@@ -1,44 +1,50 @@
 version: '3.7'
 services:
   lb:
-    image: nginx
+    # image: mbarthelemy/nginx-geoip
+    # image: nginx:1.25.3-alpine
+    # image: karelbemelmans/nginx-geoip
+    image: anroe/nginx-geoip2
     restart: always
     volumes:
-      - ./configs/lb.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/lb.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./GeoLite2-Country.mmdb:/www/data/GeoLite2-Country.mmdb:ro
+      # - ./geoip2_module/ngx_http_geoip2_module:/ngx_http_geoip2_module
     ports:
       - '127.0.0.1:9999:80'
+
   uk:
     image: nginx
     volumes:
-      - ./configs/node.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/node.conf:/etc/nginx/conf.d/default.conf:ro
       - ./data/uk.html:/www/data/index.html:ro
     # ports:
     #   - '127.0.0.1:9999:80'
   us1:
     image: nginx
     volumes:
-      - ./configs/node.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/node.conf:/etc/nginx/conf.d/default.conf:ro
       - ./data/us1.html:/www/data/index.html:ro
     # ports:
     #   - '127.0.0.1:9998:80'
   us2:
     image: nginx
     volumes:
-      - ./configs/node.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/node.conf:/etc/nginx/conf.d/default.conf:ro
       - ./data/us2.html:/www/data/index.html:ro
     # ports:
     #   - '127.0.0.1:9997:80'
   rest:
     image: nginx
     volumes:
-      - ./configs/node.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/node.conf:/etc/nginx/conf.d/default.conf:ro
       - ./data/rest.html:/www/data/index.html:ro
     # ports:
     #   - '127.0.0.1:9996:80'
   backup:
     image: nginx
     volumes:
-      - ./configs/node.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/node.conf:/etc/nginx/conf.d/default.conf
       - ./data/backup.html:/www/data/index.html:ro
     # ports:
     #   - '127.0.0.1:9995:80'
