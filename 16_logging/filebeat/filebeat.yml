@@ -9,6 +9,6 @@ filebeat.modules:
       var.paths: ["/var/log/mysql/error.log*"]
     slowlog:
       var.paths: ["/var/log/mysql/mysql-slow.log*"]
-#All data to indexed to Elasticsearch
-output.elasticsearch:
-  hosts: ["elasticsearch:9200"]
+      
+output.logstash:
+  hosts: ["graylog:5044"]

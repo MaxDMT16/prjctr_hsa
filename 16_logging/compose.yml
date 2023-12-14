@@ -1,7 +1,9 @@
 version: '3.3'
 
 volumes:
-  fbdata: {}
+  fb-data: {}
+  db-logs: {}
+  db-data: {}
 
 services:
   elasticsearch:
@@ -36,9 +38,9 @@ services:
       #Mount the filebeat configuration so users can make edit
       - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
       #Mount the mysql logs into the filebeat container so we can access and and index them using the filebeat mysql module
-      - ./db/logs:/var/log/mysql/
+      - db-logs:/var/log/mysql/
       #Named volume fbdata. This is used to persist the registry file between restarts, so to avoid data duplication
-      - fbdata:/usr/share/filebeat/data/
+      - fb-data:/usr/share/filebeat/data/
     command: filebeat -strict.perms=false
     restart: on-failure
 
@@ -48,9 +50,9 @@ services:
     entrypoint: ""
     command: bash -c "chown -R mysql:mysql /var/log/mysql && exec /entrypoint.sh mysqld"
     volumes:
-      - "./db/mysql.conf.d/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf"
-      - "./db/data:/var/lib/mysql:rw"
-      - "./db/logs:/var/log/mysql/"
+      - "./db/mysql.cnf:/etc/mysql/my.cnf"
+      - "db-data:/var/lib/mysql:rw"
+      - "db-logs:/var/log/mysql/"
     ports:
       - 3306:3306
     restart: always
@@ -87,3 +89,6 @@ services:
     - 12201:12201
   # GELF UDP
     - 12201:12201/udp
+    # Beats input
+    - 5044:5044
+    - 5044:5044/udp
