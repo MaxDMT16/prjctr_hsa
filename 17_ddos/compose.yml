@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+  attacker:
+    image: utkudarilmaz/hping3
+    depends_on:
+      - defender
+    command: hping3 --traceroute --flood --rand-source defender
+  
+  defender:
+    image: nginx
+    ports:
+      - 9999:80
