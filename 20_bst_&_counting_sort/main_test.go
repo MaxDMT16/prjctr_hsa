@@ -16,7 +16,7 @@ func insert(b *testing.B, tree *avltree.Tree, n int, generateKey keyGeneratorFun
 	}
 }
 
-var table = []int{10, 100, 1000, 10_000, 100_000} //, 1_000_000}
+var table = []int{10, 100, 1000, 10_000, 100_000, 1_000_000}
 
 func BenchmarkInsert_DifferentNumbers(b *testing.B) {
 	tree := avltree.NewWithIntComparator()
