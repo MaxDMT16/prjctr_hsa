@@ -1,6 +1,6 @@
 # AVL tree (balanced binary search tree)
 
-| operation |items count| ps/ ec|time|
+| operation |items count| ops/ ec|time|
 |-------------|-----------|-----------|-----------|
 | insert | 10 | 1237154 | 961.9 ns/op |
 | insert | 100 | 80379 | 13776 ns/op |
