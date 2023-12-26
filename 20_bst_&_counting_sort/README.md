@@ -45,7 +45,7 @@ go test -bench=.
 | remove (same input)* | 1000000 | 877455028 | 13.03 ns/op |
 
 
-* for 1000000 items count, benchmark run for 10 seconds, to more results for statistics
+\* - for 1000000 items count, benchmark run for 10 seconds, to more results for statistics
 
 ## Counting sort
 
