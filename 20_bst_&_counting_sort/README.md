@@ -46,3 +46,18 @@ go test -bench=.
 
 
 * for 1000000 items count, benchmark run for 10 seconds, to more results for statistics
+
+## Counting sort
+
+For random input where input values are in range [0, 'items_count']
+| items_count | ops/ sec | time |
+|-----------|-----------|---------|
+| 1 | 16863336 |  64.81 ns/op |
+| 10 | 3915160 | 298.4 ns/op |
+| 100 | 412136 |     3454 ns/op |
+| 1000 | 39264 |     29935 ns/op |
+| 10000 | 3722 |     375684 ns/op |
+| 100000 | 342 |     3474316 ns/op |
+| 1000000 | 12 |     92562114 ns/op |
+
+**Counting sort has poor performance for arrays of small size with big values inside.Under the hood it creates a *count array* that has length of the biggest input array value. Thus, it's risky to use this algorithm to sort dynamic input.**

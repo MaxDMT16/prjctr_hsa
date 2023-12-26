@@ -7,6 +7,10 @@ import (
 )
 
 func main() {
+	avlDemo()
+}
+
+func avlDemo() {
 	tree := avl.NewWithIntComparator() // empty(keys are of type int)
 
 	tree.Put(1, "x") // 1->x
@@ -38,3 +42,18 @@ func main() {
 	tree.Size()  // 0
 }
 
+func countingSortDemo() {
+	slice := []int{7, 1, 5, 2, 2}
+	fmt.Println(CountingSort(slice)) // [0 1 2 2 5 7]
+
+	slice1 := []int{1, 2, 3, 6, 4, 5, 4, 6, 7, 8}
+	fmt.Println(CountingSort(slice1)) // [0 1 2 3 4 4 5 6 6 7 8]
+	fmt.Println(slice1)               // [1 2 3 6 4 5 4 6 7 8]
+
+	slice2 := []int{20, 370, 45, 75, 410, 1802, 24, 2, 66}
+	fmt.Println(CountingSort(slice2))
+	// [0 2 20 24 45 66 75 370 410 1802]
+
+	fmt.Println(slice2)
+	// [20 370 45 75 410 1802 24 2 66]
+}
