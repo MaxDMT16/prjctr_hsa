@@ -46,11 +46,6 @@ func main() {
 	for tok := s.Scan(); tok != scanner.EOF; tok = s.Scan() {
 		log.Println("starting iteration of the loop")
 
-		if s.Position.Line > 10 {
-			log.Println("breaking from the loop")
-			break
-		}
-		
 		// write to elastic
 		err := w.IndexWord(indexName, s.TokenText())
 		if err != nil {

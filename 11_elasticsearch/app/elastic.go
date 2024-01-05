@@ -32,20 +32,11 @@ func newElasticsearchClient() (*elasticsearch.Client, error) {
 	fmt.Println(urls)
 
 	password := os.Getenv("ELASTIC_PASSWORD")
-	certPath := os.Getenv("ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES")
-
-	cert, err := os.ReadFile(certPath)
-	if err != nil {
-		log.Println("cannot read crt file")
-
-		return nil, fmt.Errorf("reading crt file from %s: %w", certPath, err)
-	}
-
+	
 	config := elasticsearch.Config{
 		Addresses: urls,
 		Username:  "elastic",
 		Password:  password,
-		CACert:    cert,
 	}
 
 	return elasticsearch.NewClient(config)

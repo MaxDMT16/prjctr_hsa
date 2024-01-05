@@ -1,39 +1,28 @@
-PUT english_words
+PUT new_english_words
 {
   "settings": {
-    "number_of_replicas": 1,
-    "number_of_shards": 3,
+    "max_ngram_diff": 7,
     "analysis": {
       "analyzer": {
-        "autocomplete": {
-          "tokenizer": "autocomplete",
-          "filter": [
-            "lowercase"
-          ]
-        },
-        "autocomplete_search": {
-          "tokenizer": "lowercase"
+        "ngram_analyzer": {
+          "tokenizer": "ngram_tokenizer"
         }
       },
       "tokenizer": {
-        "autocomplete": {
-          "type": "edge_ngram",
-          "min_gram": 2,
-          "max_gram": 10,
-          "token_chars": [
-            "letter"
-          ]
+        "ngram_tokenizer": {
+          "type": "ngram",
+          "min_gram": 3,
+          "max_gram": 8,
+          "token_chars": ["letter", "digit"]
         }
       }
-    },
-    "refresh_interval": "1s"
+    }
   },
   "mappings": {
-    "dynamic": false,
     "properties": {
       "word": {
         "type": "text",
-        "analyzer": "english"
+        "analyzer": "ngram_analyzer"
       }
     }
   }

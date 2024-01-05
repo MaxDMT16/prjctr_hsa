@@ -1,0 +1,16 @@
+GET /new_english_words/_search
+{
+  "query": {
+    "match": {
+      "word": {
+        "query": "trentepohbbb",
+        "fuzziness": 3
+      }
+    }
+  }
+}
+
+# trentepohlia
+# trentepohlib
+# trentepohlbb
+# trentepohbbb
