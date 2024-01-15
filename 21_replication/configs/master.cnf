@@ -1,0 +1,3 @@
+server-id = 1 # server ID, random int
+log_bin = /var/log/mysql/mysql-bin.log # path to binlog
+binlog_do_db = test-replication # database name

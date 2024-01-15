@@ -1,0 +1,42 @@
+version: '3.3'
+services:
+  mysql-m:
+    image: mysql:5.7
+    restart: always
+    env_file:
+      - config.env
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql-m-data:/var/lib/mysql
+      - ./configs/master.cnf:/etc/mysql/conf.d/master.cnf
+      - ./startup-scripts/master.sql:/docker-entrypoint-initdb.d/grant-permissions.sql
+  
+  mysql-s1:
+    depends_on:
+      - mysql-m
+    image: mysql:5.7
+    restart: always
+    env_file:
+      - config.env
+    ports:
+      - '3307:3306'
+    volumes:
+      - mysql-s1-data:/var/lib/mysql
+      - ./configs/slave1.cnf:/etc/mysql/conf.d/slave.cnf
+      - ./startup-scripts/slave.sql:/docker-entrypoint-initdb.d/setup.sql
+
+  # mysql-s2:
+  #   image: mysql:5.7
+  #   restart: always
+  #   env_file:
+  #     - config.env
+  #   ports:
+  #     - '3308:3306'
+  #   volumes:
+  #     - mysql-s2-data:/var/lib/mysql
+
+volumes:
+  mysql-m-data:
+  mysql-s1-data:
+  mysql-s2-data:
