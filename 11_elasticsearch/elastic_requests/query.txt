@@ -1,15 +1,12 @@
-GET /new_english_words/_search
+GET new_english_words/_search
 {
+  "size": 10000, 
   "query": {
     "match": {
       "word": {
-        "query": "txentxx"
+        "query": "txextxl", 
+        "fuzziness": "AUTO"
       }
     }
   }
 }
-
-# trentepohlia
-# trentepohlib
-# trentepohlbb
-# trentepohbbb
