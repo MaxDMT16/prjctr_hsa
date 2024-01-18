@@ -1,4 +1,0 @@
-server-id = 2 # server ID, random int
-relay-log = /var/log/mysql/mysql-relay-bin.log
-log_bin = /var/log/mysql/mysql-bin.log # path to binlog on Master
-binlog_do_db = test-replication # database name
