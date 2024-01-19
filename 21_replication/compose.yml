@@ -21,11 +21,11 @@ services:
       retries: 10
       start_period: 30s
 
-  mysql_slave:
+  mysql_slave1:
     image: mysql:5.7
     env_file:
       - ./slave1/.env
-    container_name: "mysql_slave"
+    container_name: "mysql_slave1"
     restart: "no"
     ports:
       - 5506:3306
@@ -36,6 +36,30 @@ services:
       - ./slave1/mysql.conf.cnf:/etc/mysql/conf.d/mysql.conf.cnf
       - ./slave1/data:/var/lib/mysql
       - ./slave1/logs:/var/log/mysql
+    networks:
+      - overlay
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 30s
+      timeout: 20s
+      retries: 10
+      start_period: 30s
+
+  mysql_slave2:
+    image: mysql:5.7
+    env_file:
+      - ./slave2/.env
+    container_name: "mysql_slave2"
+    restart: "no"
+    ports:
+      - 6606:3306
+    depends_on:
+      mysql_master:
+        condition: service_healthy
+    volumes:
+      - ./slave2/mysql.conf.cnf:/etc/mysql/conf.d/mysql.conf.cnf
+      - ./slave2/data:/var/lib/mysql
+      - ./slave2/logs:/var/log/mysql
     networks:
       - overlay
     healthcheck:
