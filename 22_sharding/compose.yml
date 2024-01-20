@@ -1,0 +1,28 @@
+version: '3'
+services:
+  # postgres-no-sharding:
+  #   image: postgres:latest
+  #   restart: no
+  #   ports:
+  #     - 5432:5432
+  #   env_file:
+  #     - config.env
+  #   volumes:
+  #     - pg_no_sharding_data:/var/lib/postgresql/data
+  #     - ./init-scripts/00_books.sql:/docker-entrypoint-initdb.d/books.sql
+
+  postgres-vertical-sharding:
+    image: postgres:latest
+    restart: no
+    ports:
+      - 5432:5432
+    env_file:
+      - config.env
+    volumes:
+      - pg_vertical_sharding_data:/var/lib/postgresql/data
+      - ./init-scripts/books.sql:/docker-entrypoint-initdb.d/00_books.sql
+      - ./init-scripts/vertical.sql:/docker-entrypoint-initdb.d/01_vertical.sql # naming is important because init scripts run in alphabetical order
+
+volumes:
+  pg_no_sharding_data:
+  pg_vertical_sharding_data:
