@@ -1,6 +1,6 @@
-| postgres-xl src - https://github.com/syndbg/docker-postgres-xl-debian
+# Sharding
 
-## How to run postgres-xl cluster
+## How to run citus cluster ([doc](https://github.com/citusdata/docker/blob/master/README.md#docker-compose))
 ```bash
-docker compose -f pg-xl-compose.yml up -d
+docker compose up -d --scale worker=4
 ```
