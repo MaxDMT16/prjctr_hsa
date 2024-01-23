@@ -32,5 +32,5 @@ export APP_DSN='host=localhost user=prjctr password=test dbname=prjctr port=5433
 |no sharding|read|1000000|3.392|
 |vertical sharding|write|1000000|198.555|
 |vertical sharding|read|1000000|2.819|
-|horizontal sharding|write|1000000|453.919|
-|horizontal sharding|read|1000000|7.182|
+|horizontal sharding (5 worker nodes)|write|1000000|453.919|
+|horizontal sharding (5 worker nodes)|read|1000000|7.182|
