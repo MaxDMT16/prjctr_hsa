@@ -1,13 +1,10 @@
 # Backups
 
 
-Full, Incremental, Differential, Reverse Delta, CDP
-size, ability to roll back at specific time point, speed of roll back, cost
-
 | Repository model | Size | Ability to roll back | Speed of roll back | Cost |
 | --- | --- | --- | --- | --- |
-| Full | |  | | |
-| Incremental | |  | | |
-| Differential | |  | | |
-| Reverse Delta | |  | | |
-| CDP | |  | | |
+| Full | large | poor | poor | high |
+| Incremental | small | good | poor-good | low |
+| Differential | medium | good | good | medium |
+| Reverse Delta | small | good | poor-good | low |
+| CDP | huge | great | fastest | highest |
