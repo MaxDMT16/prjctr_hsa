@@ -1,0 +1,1 @@
+bucket_name = "prjctr-image-converter"
