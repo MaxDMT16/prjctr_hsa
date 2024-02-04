@@ -1,0 +1,5 @@
+secrets.tfvars
+.terraform/
+.vscode/
+tf_generated/
+*.tfstate
