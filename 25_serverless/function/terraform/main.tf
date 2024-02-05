@@ -3,6 +3,7 @@
 resource "aws_s3_bucket" "prjctr_bucket" {
   bucket = var.bucket_name
 
+  force_destroy = var.force_destroy_bucket
 }
 
 resource "aws_s3_object" "folder_jpeg_images" {
