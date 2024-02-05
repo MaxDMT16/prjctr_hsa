@@ -19,7 +19,9 @@ jobs:
         with:
           go-version: '1.21.x'
       - name: Move to app directory
-        run: cd $APP_PATH
+        run: |
+          echo "APP_PATH: $APP_PATH"
+          cd $APP_PATH
       - name: Install dependencies
         run: go get .
       - name: Build
