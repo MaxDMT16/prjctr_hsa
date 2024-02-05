@@ -6,7 +6,7 @@ on: [push]
   #     - main
 
 env:
-  APP_PATH: 26_cd/queue/
+  APP_PATH: "26_cd/queue/"
 
 jobs:
   build:
