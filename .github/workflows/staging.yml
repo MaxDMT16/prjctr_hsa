@@ -5,13 +5,13 @@ on: [push]
   #   branches:
   #     - main
 
-defaults:
-  run:
-    working-directory: ./26_cd/queue/
-
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./26_cd/queue/
 
     steps:
       - uses: actions/checkout@v4
