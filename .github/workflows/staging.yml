@@ -14,6 +14,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: ./../actions/build-test-deploy
+      - uses: ./../actions/BuildTestDeploy
         with:
           target-environment: 'STG'
