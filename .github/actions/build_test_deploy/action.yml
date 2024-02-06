@@ -1,4 +1,6 @@
-name: BuildTestDeploy
+name: 'BuildTestDeploy'
+
+description: 'Build, test and deploy to bin to provided environment'
 
 inputs:
   target-environment:
@@ -16,15 +18,19 @@ runs:
         go-version: '1.21.x'
     
     - name: Install dependencies
+      shell: bash
       run: go get .
     
     - name: Build
+      shell: bash
       run: go build -v ./...
     
     - name: Test with the Go CLI
+      shell: bash
       run: |
         go test -coverpkg=./... -coverprofile cover.out -race ./...
         go tool cover -func cover.out -o cover.txt
     
     - name: Deploy binary to staging
+      shell: bash
       run: echo "Deploying to ${{ inputs.github-token }}"
