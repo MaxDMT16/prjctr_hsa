@@ -14,6 +14,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: ./.github/actions/build_test_deploy
+      - uses: /.github/actions/build_test_deploy.yml
         with:
           target-environment: 'STG'
