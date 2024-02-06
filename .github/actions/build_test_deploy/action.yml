@@ -20,19 +20,23 @@ runs:
         go-version: '1.21.x'
     
     - name: Install dependencies
+      working-directory: ${{ inputs.working-directory }}
       shell: bash
       run: go get .
     
     - name: Build
+      working-directory: ${{ inputs.working-directory }}
       shell: bash
       run: go build -v ./...
     
     - name: Test with the Go CLI
+      working-directory: ${{ inputs.working-directory }}
       shell: bash
       run: |
         go test -coverpkg=./... -coverprofile cover.out -race ./...
         go tool cover -func cover.out -o cover.txt
     
     - name: Deploy binary to staging
+      working-directory: ${{ inputs.working-directory }}
       shell: bash
       run: echo "Deploying to ${{ inputs.github-token }}"
