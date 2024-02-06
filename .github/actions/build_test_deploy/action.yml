@@ -1,0 +1,42 @@
+name: 'BuildTestDeploy'
+
+description: 'Build, test and deploy to bin to provided environment'
+
+inputs:
+  target-environment:
+    description: 'Environment to deploy to'
+    required: true
+  working-directory:
+    description: 'Working directory'
+    required: false
+    default: './'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21.x'
+    
+    - name: Install dependencies
+      working-directory: ${{ inputs.working-directory }}
+      shell: bash
+      run: go get .
+    
+    - name: Build
+      working-directory: ${{ inputs.working-directory }}
+      shell: bash
+      run: go build -v ./...
+    
+    - name: Test with the Go CLI
+      working-directory: ${{ inputs.working-directory }}
+      shell: bash
+      run: |
+        go test -coverpkg=./... -coverprofile cover.out -race ./...
+        go tool cover -func cover.out -o cover.txt
+    
+    - name: Deploy binary to staging
+      working-directory: ${{ inputs.working-directory }}
+      shell: bash
+      run: echo "Deploying to ${{ inputs.target-environment }}"
