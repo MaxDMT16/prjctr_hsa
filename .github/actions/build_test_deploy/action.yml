@@ -6,6 +6,10 @@ inputs:
   target-environment:
     description: 'Environment to deploy to'
     required: true
+  working-directory:
+    description: 'Working directory'
+    required: false
+    default: './'
 
 runs:
   using: 'composite'

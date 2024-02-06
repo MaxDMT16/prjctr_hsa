@@ -9,13 +9,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: ./26_cd/queue/
-
     steps:
       - uses: actions/checkout@v4
       
       - uses: ./.github/actions/build_test_deploy/
         with:
           target-environment: 'STG'
+          working-directory: ./26_cd/queue/
