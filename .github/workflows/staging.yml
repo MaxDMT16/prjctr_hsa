@@ -12,7 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - uses: ./.github/actions/build_test_deploy/
+      - name: Build, test and deploy to staging
+        uses: ./.github/actions/build_test_deploy/
         with:
           target-environment: 'STG'
           working-directory: ./26_cd/queue/
