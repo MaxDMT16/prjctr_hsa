@@ -1,0 +1,30 @@
+name: BuildTestDeploy
+
+inputs:
+  target-environment:
+    description: 'Environment to deploy to'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21.x'
+    
+    - name: Install dependencies
+      run: go get .
+    
+    - name: Build
+      run: go build -v ./...
+    
+    - name: Test with the Go CLI
+      run: |
+        go test -coverpkg=./... -coverprofile cover.out -race ./...
+        go tool cover -func cover.out -o cover.txt
+    
+    - name: Deploy binary to staging
+      run: echo "Deploying to ${{ inputs.github-token }}"

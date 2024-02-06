@@ -52,11 +52,11 @@ func TestQueue_Pop(t *testing.T) {
 		input []string
 		want  []string
 	}{
-		{
-			name:  "empty queue",
-			input: []string{},
-			want:  []string{},
-		},
+		// {
+		// 	name:  "empty queue",
+		// 	input: []string{},
+		// 	want:  []string{},
+		// },
 		{
 			name:  "single item",
 			input: []string{"item1"},

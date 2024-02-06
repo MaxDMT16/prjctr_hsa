@@ -1,0 +1,19 @@
+name: Test and deploy on staging
+
+on: [push]
+  # push:
+  #   branches:
+  #     - main
+
+defaults:
+  run:
+    working-directory: ./26_cd/queue/
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: ./../actions/build-test-deploy
+        with:
+          target-environment: 'STG'
