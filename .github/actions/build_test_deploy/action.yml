@@ -39,4 +39,4 @@ runs:
     - name: Deploy binary to staging
       working-directory: ${{ inputs.working-directory }}
       shell: bash
-      run: echo "Deploying to ${{ inputs.github-token }}"
+      run: echo "Deploying to ${{ inputs.target-environment }}"

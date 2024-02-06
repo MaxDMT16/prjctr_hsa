@@ -1,9 +1,9 @@
 name: Test and deploy on staging
 
-on: [push]
-  # push:
-  #   branches:
-  #     - main
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   deploy:
