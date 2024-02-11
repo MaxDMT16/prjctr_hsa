@@ -3,6 +3,24 @@ resource "aws_security_group" "ec2" {
   vpc_id = aws_vpc.prjctr.id
 }
 
+resource "aws_security_group_rule" "allow_outbound_traffic" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  security_group_id = aws_security_group.ec2.id
+  cidr_blocks       = ["0.0.0.0/0"]
+}
+
+resource "aws_security_group_rule" "ingress_to_ubuntu_repository" {
+  type = "ingress"
+  from_port = 80
+  to_port = 80
+  protocol = "tcp"
+  security_group_id = aws_security_group.ec2.id
+  cidr_blocks = ["127.0.0.53/32"] # Ubuntu repository
+}
+
 resource "aws_security_group" "alb" {
   name   = "alb-sg"
   vpc_id = aws_vpc.prjctr.id

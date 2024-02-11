@@ -5,13 +5,13 @@ locals {
 
   servers = {
     server-1 = {
-      ami            = "ami-0766b4b472db7e3b9"
+      ami            = local.ami.ubuntu
       instance_type  = "t2.micro"
       subnet_id      = aws_subnet.prjctr_public_a.id
       user_data_path = "scripts/server1.tpl"
     },
     server-2 = {
-      ami            = "ami-0766b4b472db7e3b9"
+      ami            = local.ami.ubuntu
       instance_type  = "t2.micro"
       subnet_id      = aws_subnet.prjctr_public_b.id
       user_data_path = "scripts/server2.tpl"
