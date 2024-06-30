@@ -16,5 +16,5 @@ jobs:
         id: pragent
         uses: Codium-ai/pr-agent@main
         env:
-          ANTHROPIC_KEY: ${{ secrets.CLAUDEAI_KEY }}
+          ANTHROPIC.KEY: ${{ secrets.CLAUDEAI_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
